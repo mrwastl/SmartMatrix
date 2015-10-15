@@ -80,9 +80,11 @@ void SMLayerBackground<RGB, optionFlags>::fillRefreshRow(uint16_t hardwareY, rgb
         for(i=0; i<this->matrixWidth; i++) {
             currentPixel = currentRefreshBufferPtr[(hardwareY * this->matrixWidth) + i];
             // load background pixel with color correction
-            refreshRow[i] = rgb48(backgroundColorCorrectionLUT[currentPixel.red],
-                backgroundColorCorrectionLUT[currentPixel.green],
-                backgroundColorCorrectionLUT[currentPixel.blue]);
+
+            refreshRow[i] = currentPixel; // implicit conversion to rgb24
+            refreshRow[i].red   = backgroundColorCorrectionLUT[refreshRow[i].red] >> 8;
+            refreshRow[i].green = backgroundColorCorrectionLUT[refreshRow[i].green] >> 8;
+            refreshRow[i].blue  = backgroundColorCorrectionLUT[refreshRow[i].blue] >> 8;
         }
     } else {
         for(i=0; i<this->matrixWidth; i++) {

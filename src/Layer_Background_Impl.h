@@ -51,18 +51,20 @@ void SMLayerBackground<RGB, optionFlags>::frameRefreshCallback(void) {
 
 template <typename RGB, unsigned int optionFlags>
 void SMLayerBackground<RGB, optionFlags>::fillRefreshRow(uint16_t hardwareY, rgb48 refreshRow[]) {
-    RGB currentPixel;
+    //RGB currentPixel;
     int i;
 
-    if(this->ccEnabled) {
+    if(this->ccEnabled && sizeof(RGB) <=3) {
+        rgb24 currentPixel; // colour correction only makes sense with rgb8, rgb16, and rgb24
         for(i=0; i<this->matrixWidth; i++) {
             currentPixel = currentRefreshBufferPtr[(hardwareY * this->matrixWidth) + i];
             // load background pixel with color correction
-            refreshRow[i] = rgb48(backgroundColorCorrectionLUT[currentPixel.red],
-                backgroundColorCorrectionLUT[currentPixel.green],
-                backgroundColorCorrectionLUT[currentPixel.blue]);
+            refreshRow[i].red   = backgroundColorCorrectionLUT[currentPixel.red];
+            refreshRow[i].green = backgroundColorCorrectionLUT[currentPixel.green];
+            refreshRow[i].blue  = backgroundColorCorrectionLUT[currentPixel.blue];
         }
     } else {
+        RGB currentPixel;
         for(i=0; i<this->matrixWidth; i++) {
             currentPixel = currentRefreshBufferPtr[(hardwareY * this->matrixWidth) + i];
             // load background pixel without color correction

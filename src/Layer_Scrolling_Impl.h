@@ -118,7 +118,7 @@ void SMLayerScrolling<RGB, optionFlags>::fillRefreshRow(uint16_t hardwareY, rgb4
     int i;
 
     if(this->ccEnabled)
-        colorCorrection(textcolor, currentPixel);
+        colorCorrection(rgb24(textcolor), currentPixel);
     else
         currentPixel = textcolor;
 
@@ -136,7 +136,7 @@ void SMLayerScrolling<RGB, optionFlags>::fillRefreshRow(uint16_t hardwareY, rgb2
     int i;
 
     if(this->ccEnabled)
-        colorCorrection(textcolor, currentPixel);
+        colorCorrection(rgb24(textcolor), currentPixel);
     else
         currentPixel = textcolor;
 

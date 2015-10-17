@@ -153,6 +153,11 @@ typedef struct rgb24 {  // RGB888
     rgb24& operator=(const rgb24& col);
     rgb24& operator=(const rgb48& col);
 
+    rgb24( const rgb8& col);
+    rgb24( const rgb16& col);
+    rgb24( const rgb24& col);
+    rgb24( const rgb48& col);
+
     uint8_t red;
     uint8_t green;
     uint8_t blue;
@@ -171,6 +176,11 @@ typedef struct rgb48 {
     rgb48& operator=(const rgb8& col);
     rgb48& operator=(const rgb16& col);
     rgb48& operator=(const rgb24& col);
+
+    rgb48( const rgb8& col);
+    rgb48( const rgb16& col);
+    rgb48( const rgb24& col);
+    rgb48( const rgb48& col);
 
     uint16_t red;
     uint16_t green;
@@ -292,6 +302,30 @@ inline rgb24& rgb24::operator=(const rgb48& col) {
     return *this;
 }
 
+inline rgb24::rgb24(const rgb8& col) {
+    red =   cs_scale3to8[col.red];      // 3 -> 8
+    green = cs_scale3to8[col.green];    // 3 -> 8
+    blue =  cs_scale2to8[col.blue];     // 2 -> 8
+}
+
+inline rgb24::rgb24(const rgb16& col) {
+    red =   cs_scale5to8[col.red];      // 5 -> 8
+    green = cs_scale6to8[col.green];    // 6 -> 8
+    blue =  cs_scale5to8[col.blue];     // 5 -> 8
+}
+
+inline rgb24::rgb24(const rgb24& col) {
+    red = col.red;
+    green = col.green;
+    blue = col.blue;
+}
+
+inline rgb24::rgb24(const rgb48& col) {
+    red = col.red >> 8;
+    green = col.green >> 8;
+    blue = col.blue >> 8;
+}
+
 
 // rgb48-methods:
 inline rgb48& rgb48::operator=(const rgb8& col) {
@@ -313,6 +347,30 @@ inline rgb48& rgb48::operator=(const rgb24& col) {
     green = col.green << 8;
     blue = col.blue << 8;
     return *this;
+}
+
+inline rgb48::rgb48(const rgb8& col) {
+    red =   cs_scale3to16[col.red];     // 3 -> 16
+    green = cs_scale3to16[col.green];   // 3 -> 16
+    blue =  cs_scale2to16[col.blue];    // 2 -> 16
+}
+
+inline rgb48::rgb48(const rgb16& col) {
+    red =   cs_scale5to16[col.red];     // 5 -> 16
+    green = cs_scale6to16[col.green];   // 6 -> 16
+    blue =  cs_scale5to16[col.blue];    // 5 -> 16
+}
+
+inline rgb48::rgb48(const rgb24& col) {
+    red = col.red << 8;
+    green = col.green << 8;
+    blue = col.blue << 8;
+}
+
+inline rgb48::rgb48(const rgb48& col) {
+    red = col.red;
+    green = col.green;
+    blue = col.blue;
 }
 
 #define NAME2(fun,suffix) fun ## suffix

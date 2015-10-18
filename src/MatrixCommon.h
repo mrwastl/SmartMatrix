@@ -113,9 +113,14 @@ typedef struct rgb8 {  // RGB332
     rgb8( const rgb24& col );
     rgb8( const rgb48& col );
 
-    uint8_t red   :3;
-    uint8_t green :3;
-    uint8_t blue  :2;
+    union {
+      struct {
+        uint8_t blue  :2;
+        uint8_t green :3;
+        uint8_t red   :3;
+      };
+      uint8_t rgb;
+    };
 } rgb8;
 
 typedef struct rgb16 { // RGB656
@@ -134,9 +139,14 @@ typedef struct rgb16 { // RGB656
     rgb16( const rgb24& col );
     rgb16( const rgb48& col );
 
-    uint16_t red   :5;
-    uint16_t green :6;
-    uint16_t blue  :5;
+    union {
+      struct {
+        uint16_t blue  :5;
+        uint16_t green :6;
+        uint16_t red   :5;
+      };
+      uint16_t rgb;
+    };
 } rgb16;
 
 typedef struct rgb24 {  // RGB888
@@ -193,9 +203,7 @@ typedef struct rgb48 {
 // rgb8-methods:
 
 inline rgb8& rgb8::operator=(const rgb8& col) {
-    red   = col.red;
-    green = col.green;
-    blue  = col.blue;
+    rgb = col.rgb;
     return *this;
 }
 
@@ -241,9 +249,7 @@ inline rgb16& rgb16::operator=(const rgb8& col) {
 }
 
 inline rgb16& rgb16::operator=(const rgb16& col) {
-    red = col.red;
-    green = col.green;
-    blue = col.blue;
+    rgb = col.rgb;
     return *this;
 }
 
@@ -342,10 +348,16 @@ inline rgb48& rgb48::operator=(const rgb16& col) {
     return *this;
 }
 
+/* cheap trick to extend destination range from
+ * [0x000000000000 .. 0xFF00FF00FF00] to [0x000000000000 .. 0xFFFFFFFFFFFF]
+ * and maintain some level of accuracy:
+ * write source colour to higher AND lower part of destination uint16_t:
+ * 0x000000 stays 0x000000000000, but 0xFFFFFF will correctly be 0xFFFFFFFFFFFF
+ */
 inline rgb48& rgb48::operator=(const rgb24& col) {
-    red = col.red << 8;
-    green = col.green << 8;
-    blue = col.blue << 8;
+    red = (col.red << 8) | col.red;
+    green = (col.green << 8)  | col.green;
+    blue = (col.blue << 8) | col.blue;
     return *this;
 }
 
@@ -362,9 +374,9 @@ inline rgb48::rgb48(const rgb16& col) {
 }
 
 inline rgb48::rgb48(const rgb24& col) {
-    red = col.red << 8;
-    green = col.green << 8;
-    blue = col.blue << 8;
+    red = (col.red << 8) | col.red;
+    green = (col.green << 8)  | col.green;
+    blue = (col.blue << 8) | col.blue;
 }
 
 inline rgb48::rgb48(const rgb48& col) {

@@ -110,6 +110,7 @@ typedef struct rgb8 {  // RGB332
     rgb8& operator=(const rgb24& col);
     rgb8& operator=(const rgb48& col);
 
+    rgb8( const rgb16& col );
     rgb8( const rgb24& col );
     rgb8( const rgb48& col );
 
@@ -136,6 +137,7 @@ typedef struct rgb16 { // RGB656
     rgb16& operator=(const rgb24& col);
     rgb16& operator=(const rgb48& col);
 
+    rgb16( const rgb8& col );
     rgb16( const rgb24& col );
     rgb16( const rgb48& col );
 
@@ -228,6 +230,11 @@ inline rgb8& rgb8::operator=(const rgb48& col) {
     return *this;
 }
 
+inline rgb8::rgb8(const rgb16& col) {
+    red   = col.red   >> 2;    /* 5 -> 3 */
+    green = col.green >> 3;    /* 6 -> 3 */
+    blue  = col.blue  >> 3;    /* 5 -> 2 */
+}
 inline rgb8::rgb8(const rgb24& col) {
     red   = col.red   >> 5;    /* 8 -> 3 */
     green = col.green >> 5;    /* 8 -> 3 */
@@ -267,6 +274,11 @@ inline rgb16& rgb16::operator=(const rgb48& col) {
     return *this;
 }
 
+inline rgb16::rgb16(const rgb8& col) {
+    red =   cs_scale3to5[col.red];      // 3 -> 5
+    green = cs_scale3to6[col.green];    // 3 -> 6
+    blue =  cs_scale2to5[col.blue];     // 2 -> 5
+}
 inline rgb16::rgb16(const rgb24& col) {
     red = col.red >> 3;      // 8 -> 5
     green = col.green >> 2;  // 8 -> 6

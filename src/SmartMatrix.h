@@ -89,6 +89,7 @@ private:
     static void loadMatrixBuffers48(unsigned char currentRow, unsigned char freeRowBuffer);
     static void loadMatrixBuffers36(unsigned char currentRow, unsigned char freeRowBuffer);
     static void loadMatrixBuffers24(unsigned char currentRow, unsigned char freeRowBuffer);
+    static void loadMatrixBuffers12(unsigned char currentRow, unsigned char freeRowBuffer);
 
     // configuration helper functions
     static void calculateTimerLut(void);

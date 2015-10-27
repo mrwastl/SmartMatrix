@@ -26,7 +26,7 @@
 
 #include <stdint.h>
 
-#include "MatrixHardware_KitV1.h"
+#include "MatrixHardware_RGB_DMD.h"
 
 #include "MatrixCommon.h"
 

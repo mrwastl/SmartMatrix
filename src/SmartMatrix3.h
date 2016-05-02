@@ -28,7 +28,8 @@
 
 #include "Arduino.h"
 
-#include "MatrixHardware_KitV1.h"
+//#include "MatrixHardware_KitV1.h"
+#include "MatrixHardware_RGB_DMD.h"
 
 #include "MatrixCommon.h"
 
@@ -91,6 +92,7 @@ private:
     static void loadMatrixBuffers48(unsigned char currentRow, unsigned char freeRowBuffer);
     static void loadMatrixBuffers36(unsigned char currentRow, unsigned char freeRowBuffer);
     static void loadMatrixBuffers24(unsigned char currentRow, unsigned char freeRowBuffer);
+    static void loadMatrixBuffers12(unsigned char currentRow, unsigned char freeRowBuffer);
 
     // configuration helper functions
     static void calculateTimerLut(void);

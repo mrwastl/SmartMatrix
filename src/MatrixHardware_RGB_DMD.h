@@ -1,4 +1,12 @@
 /*
+ * WARNING!
+ *
+ * This file has been modified in a manner that makes it incompatible
+ * with the official Pixelmatix SmartMatrix boards! It has changed pin
+ * definitions required to support slave mode on the SPI_0 port.
+ */
+
+/*
  * SmartMatrix Library - Hardware-Specific Header File
  *
  * Copyright (c) 2015 Louis Beaudoin (Pixelmatix)
@@ -39,7 +47,9 @@
 // max delay from rising edge of latch pulse to falling edge of clock
 // increase this value if DMA use is delaying clock
 // using largest delay seen at slowest supported clock speed (48MHz) 1400ns, saw 916ns at 96MHz
-#define LATCH_TO_CLK_DELAY_NS       1400
+//#define LATCH_TO_CLK_DELAY_NS       1400
+// faster cpu clock:
+#define LATCH_TO_CLK_DELAY_NS       800
 
 // measured <3400ns to transfer 32 pixels at 96MHz, <6600ns to transfer 32 pixels at 48MHz
 #define PANEL_32_PIXELDATA_TRANSFER_MAXIMUM_NS  (uint32_t)((3400 * 96000000.0) / F_CPU)
@@ -68,13 +78,13 @@
 #define GPIO_PIN_B1_TEENSY_PIN      20
 
 #define ADDX_PIN_0  3
-#define ADDX_PIN_1  4
+#define ADDX_PIN_1  0
 #define ADDX_PIN_2  1
 #define ADDX_PIN_3  2
 #define ADDX_PIN_MASK   ((1 << ADDX_PIN_0) | (1 << ADDX_PIN_1) | (1 << ADDX_PIN_2) | (1 << ADDX_PIN_3))
 
 #define ADDX_TEENSY_PIN_0   9
-#define ADDX_TEENSY_PIN_1   10
+#define ADDX_TEENSY_PIN_1   15
 #define ADDX_TEENSY_PIN_2   22
 #define ADDX_TEENSY_PIN_3   23
 

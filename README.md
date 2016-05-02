@@ -2,7 +2,7 @@
 
 The SmartMatrix Library is designed to make it easy to display graphics and scrolling text on multiplexed RGB LED matrix panels connected to a Teensy 3.
 
-Version 3.0 is a significant upgrade from 2.x, with a new API that is not backwards compatible.  See the [release notes on GitHub](https://github.com/pixelmatix/SmartMatrix/releases) for more details, and [MIGRATION.md](https://github.com/pixelmatix/SmartMatrix/blob/sm3.0/MIGRATION.md) for details on migrating sketches from SmartMatrix 2.x to 3.0.
+Version 3.0 is a significant upgrade from 2.x, with a new API that is not backwards compatible.  See the [release notes on GitHub](https://github.com/pixelmatix/SmartMatrix/releases) for more details, and [MIGRATION.md](https://github.com/pixelmatix/SmartMatrix/blob/sm3.0/MIGRATION.md) for details on migrating sketches from SmartMatrix 2.x to 3.0.  You can have SmartMatrix3 installed in parallel with an existing SmartMatrix_32x32 or SmartMatrix_16x32 library without conflicts.
 
 More documentation Here:  
 [docs.pixelmatix.com/SmartMatrix](http://docs.pixelmatix.com/SmartMatrix)
@@ -18,7 +18,7 @@ This documentation assumes you have a general knowledge of the Teensy 3.1/3.2, h
 
 Make sure you have a supported version of the Arduino IDE and Teensyduino add-on installed.
 
-* [Arduino IDE](http://arduino.cc/en/main/software) - version 1.6.5 recomended
+* [Arduino IDE](http://arduino.cc/en/main/software) - version 1.6.5 or later recommended
 * [Teensyduino](http://www.pjrc.com/teensy/td_download.html) - use the latest version
 
 Before continuing, use the blink example in the Arduino IDE to verify you can compile and run a sketch on your Teensy 3.1/3.2.
@@ -52,7 +52,7 @@ Some SmartMatrix examples require external libraries to compile.  You may alread
 Installing Arduino libraries from GitHub has a couple pitfalls.  [This Adafruit tutorial](https://learn.adafruit.com/adafruit-all-about-arduino-libraries-install-use/) explains the basics of installing libraries and how to avoid the pitfalls.
 
 **FastLED**  
-If you're having trouble compiling Aurora and are getting errors that refer to FastLED.h, try compiling the `FastLED_Functions` example first, which will help narrow down the issue.
+If you're having trouble compiling Aurora and are getting errors that refer to FastLED.h, try compiling the `FastLED_Functions` example first, which will help narrow down the issue.  Also make sure you are using FastLED 3.1 or later.
 
 This error means the FastLED library isn't installed (correctly):  
 `fatal error: FastLED.h: No such file or directory`

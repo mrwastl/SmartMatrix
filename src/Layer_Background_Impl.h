@@ -21,6 +21,8 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+#include <stdlib.h>     
+
 static color_chan_t backgroundColorCorrectionLUT[256];
 
 template <typename RGB, unsigned int optionFlags>
@@ -854,6 +856,11 @@ void SMLayerBackground<RGB, optionFlags>::drawMonoBitmap(int16_t x, int16_t y, u
             }
         }
     }
+}
+
+template <typename RGB, unsigned int optionFlags>
+bool SMLayerBackground<RGB, optionFlags>::isSwapPending(void) {
+    return swapPending;
 }
 
 template <typename RGB, unsigned int optionFlags>
